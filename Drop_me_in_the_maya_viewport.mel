@@ -1,0 +1,57 @@
+// this script will create a button on your current shelf 
+// that when clicked, will open the Frame Helper window
+//
+// Copyright (c) 2022 Moreau Christophe moreau.vfx@gmail.com
+
+global proc string mayaFramingHelper() {
+    string $whatIs = `whatIs mayaFramingHelper`;
+    string $path = `substring $whatIs 25 999`;
+    string $filename = `substitute "/Drop_me_in_the_maya_viewport.mel" $path ""`;;
+    return $filename;
+}
+
+global proc MayaFrameHelper_install()
+{
+	// this script will create a shelf button for the Frame Helper toolbox
+
+	string $os = `about -os`;
+
+	string $ff = "*.so";		// this is the type for linux
+	string $ps = "/";				// this the path separator for mac and linux
+
+	if( `gmatch $os "mac"` )
+		{
+			$ff = "*.bundle";
+		}
+	else if( `gmatch $os "win"` || `gmatch $os "win64"` )
+		{
+			$ff = "mayaFramingHelper.py";
+			$ps = "\\";
+		}
+
+	//string $path[] = `fileDialog2 -caption "Select the MayaFramingHelper.py :" -ff $ff -fileMode 1`;
+	string $path = mayaFramingHelper();
+	
+	string $cmd = ("import os" + "\n" +
+	"import sys" + "\n" + 
+	"scriptPath = r'" + $path + "'\n" +
+	"if scriptPath not in sys.path:" + "\n" +
+	"	sys.path.insert(0, scriptPath)" + "\n" +
+	"import mayaFramingHelper" + "\n" + 
+	"mayaFramingHelper.main()");
+
+	string $icon = dirname( $path ) + $ps + "mayaFramingHelper/gui/" + "frame_32x32.ico";
+
+	global string $gShelfTopLevel;
+	setParent `shelfTabLayout -query -selectTab $gShelfTopLevel`;
+
+	if( `filetest -r $icon` )
+		{
+			shelfButton -command $cmd -stp "python" -image $icon;
+		}
+	else
+		{
+			shelfButton -command $cmd -stp "python" -imageOverlayLabel "Maya Frame Helper";
+		}
+}
+MayaFrameHelper_install();
