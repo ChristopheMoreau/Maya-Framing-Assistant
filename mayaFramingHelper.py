@@ -84,7 +84,6 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
 
         # Path to png picture
         self.pathImage = str(sys.path[0]) + r"/pictures"
-        self.pathImage = str(r'Z:/ESMA/04_DEV/PIPELINE/PYTHON/mayaFramingHelper/pictures')
 
         # Update Camera at launch
         self.activateOptions(2)
