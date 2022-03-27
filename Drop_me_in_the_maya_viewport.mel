@@ -13,7 +13,6 @@ global proc string mayaFramingHelper() {
 global proc MayaFrameHelper_install()
 {
 	string $path = mayaFramingHelper();
-	//print $path;
 	
 	string $cmd = ("import os" + "\n" +
 	"import sys" + "\n" + 
@@ -24,7 +23,6 @@ global proc MayaFrameHelper_install()
 	"mayaFramingHelper.main()");
 
 	string $icon = $path + "/gui/" + "frame_32x32.ico";
-	print $icon;
 
 	global string $gShelfTopLevel;
 	setParent `shelfTabLayout -query -selectTab $gShelfTopLevel`;
