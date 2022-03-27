@@ -12,25 +12,8 @@ global proc string mayaFramingHelper() {
 
 global proc MayaFrameHelper_install()
 {
-	// this script will create a shelf button for the Frame Helper toolbox
-
-	string $os = `about -os`;
-
-	string $ff = "*.so";		// this is the type for linux
-	string $ps = "/";				// this the path separator for mac and linux
-
-	if( `gmatch $os "mac"` )
-		{
-			$ff = "*.bundle";
-		}
-	else if( `gmatch $os "win"` || `gmatch $os "win64"` )
-		{
-			$ff = "mayaFramingHelper.py";
-			$ps = "\\";
-		}
-
-	//string $path[] = `fileDialog2 -caption "Select the MayaFramingHelper.py :" -ff $ff -fileMode 1`;
 	string $path = mayaFramingHelper();
+	//print $path;
 	
 	string $cmd = ("import os" + "\n" +
 	"import sys" + "\n" + 
@@ -40,7 +23,8 @@ global proc MayaFrameHelper_install()
 	"import mayaFramingHelper" + "\n" + 
 	"mayaFramingHelper.main()");
 
-	string $icon = dirname( $path ) + $ps + "mayaFramingHelper/gui/" + "frame_32x32.ico";
+	string $icon = $path + "/gui/" + "frame_32x32.ico";
+	print $icon;
 
 	global string $gShelfTopLevel;
 	setParent `shelfTabLayout -query -selectTab $gShelfTopLevel`;
