@@ -15,8 +15,7 @@ import sys
 
 # listing *.png from picture's folder
 def getListPic():
-    # pathImage = str(sys.path[0]) + r"/pictures"
-    pathImage = r"Z:/ESMA/04_DEV/PIPELINE/PYTHON/mayaFramingHelper/pictures"
+    pathImage = str(sys.path[0]) + r"/pictures"
     lst = listdir(pathImage)
     listPic = []
     for x in lst:
@@ -72,8 +71,7 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         # using the UIFILEPATH
-        # UIFILEPATH = str(sys.path[0]) + str(r'/gui/mainWindow.ui')
-        UIFILEPATH = str(r'Z:/ESMA/04_DEV/PIPELINE/PYTHON/mayaFramingHelper/gui/mainWindow.ui')
+        UIFILEPATH = str(sys.path[0]) + str(r'/gui/mainWindow.ui')
         # print(UIFILEPATH)
         self.UI = QUiLoader().load(UIFILEPATH)
         # Get the window title from the ui file
