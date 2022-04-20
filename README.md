@@ -5,4 +5,6 @@ Just drag & Drop the mel file in the Maya viewport for installation. It will cre
 
 [![Everything Is AWESOME](https://i.ibb.co/GVFVyqC/Maya-Framing-Assistant.jpg)](https://vimeo.com/701267617 "Maya Framing Assitant - Click to Watch!")
 
+Video => https://vimeo.com/701267617
+
 <p>from <a href="https://vimeo.com/user7741755">Christophe Moreau</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
