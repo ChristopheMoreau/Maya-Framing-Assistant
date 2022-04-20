@@ -3,26 +3,28 @@
 //
 // Copyright (c) 2022 Moreau Christophe moreau.vfx@gmail.com
 
-global proc string mayaFramingHelper() {
-    string $whatIs = `whatIs mayaFramingHelper`;
+global proc string MayaFramingAssistant() {
+    string $whatIs = `whatIs MayaFramingAssistant`;
     string $path = `substring $whatIs 25 999`;
     string $filename = `substitute "/Drop_me_in_the_maya_viewport.mel" $path ""`;;
     return $filename;
 }
 
-global proc MayaFrameHelper_install()
+global proc MayaFramingAssistant_install()
 {
-	string $path = mayaFramingHelper();
+	string $path = MayaFramingAssistant();
+	//print $path;
 	
 	string $cmd = ("import os" + "\n" +
 	"import sys" + "\n" + 
 	"scriptPath = r'" + $path + "'\n" +
 	"if scriptPath not in sys.path:" + "\n" +
 	"	sys.path.insert(0, scriptPath)" + "\n" +
-	"import mayaFramingHelper" + "\n" + 
-	"mayaFramingHelper.main()");
+	"import MayaFramingAssistant" + "\n" + 
+	"MayaFramingAssistant.main()");
 
 	string $icon = $path + "/gui/" + "frame_32x32.ico";
+	print $icon;
 
 	global string $gShelfTopLevel;
 	setParent `shelfTabLayout -query -selectTab $gShelfTopLevel`;
@@ -33,7 +35,7 @@ global proc MayaFrameHelper_install()
 		}
 	else
 		{
-			shelfButton -command $cmd -stp "python" -imageOverlayLabel "Maya Frame Helper";
+			shelfButton -command $cmd -stp "python" -imageOverlayLabel "Maya Framing Assistant";
 		}
 }
-MayaFrameHelper_install();
+MayaFramingAssistant_install();
