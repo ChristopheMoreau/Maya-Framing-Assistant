@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>275</width>
-    <height>410</height>
+    <width>265</width>
+    <height>396</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,30 +19,21 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>275</width>
-    <height>410</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>275</width>
-    <height>410</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Framing Helper</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -53,15 +44,18 @@
      <bold>false</bold>
     </font>
    </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
    <widget class="QComboBox" name="listCam">
     <property name="enabled">
      <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>15</x>
+      <x>10</x>
       <y>20</y>
-      <width>166</width>
+      <width>161</width>
       <height>22</height>
      </rect>
     </property>
@@ -88,46 +82,13 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="refreshButton">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>20</y>
-      <width>76</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="font">
-     <font>
-      <italic>false</italic>
-     </font>
-    </property>
-    <property name="tabletTracking">
-     <bool>false</bool>
-    </property>
-    <property name="toolTip">
-     <string>Clic this button to refresh the camera list</string>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>!  GET CAMERA !</string>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>15</x>
+      <x>10</x>
       <y>65</y>
       <width>251</width>
       <height>331</height>
@@ -138,18 +99,6 @@
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>251</width>
-      <height>331</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>251</width>
-      <height>331</height>
-     </size>
     </property>
     <property name="tabPosition">
      <enum>QTabWidget::North</enum>
@@ -180,9 +129,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>205</y>
+        <y>138</y>
         <width>246</width>
-        <height>106</height>
+        <height>101</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -200,9 +149,9 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>35</y>
-         <width>229</width>
+         <x>13</x>
+         <y>37</y>
+         <width>221</width>
          <height>61</height>
         </rect>
        </property>
@@ -210,7 +159,10 @@
         <property name="sizeConstraint">
          <enum>QLayout::SetMinAndMaxSize</enum>
         </property>
-        <property name="spacing">
+        <property name="horizontalSpacing">
+         <number>6</number>
+        </property>
+        <property name="verticalSpacing">
          <number>8</number>
         </property>
         <item row="0" column="0">
@@ -237,7 +189,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>12</string>
@@ -269,7 +221,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>24</string>
@@ -301,7 +253,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>35</string>
@@ -333,7 +285,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string>background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>85</string>
@@ -365,7 +317,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>50</string>
@@ -397,7 +349,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>135</string>
@@ -429,7 +381,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>100</string>
@@ -461,7 +413,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>150</string>
@@ -493,7 +445,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>175</string>
@@ -525,7 +477,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(43, 43, 43);</string>
+           <string notr="true">background-color: rgb(55, 55, 55);</string>
           </property>
           <property name="text">
            <string>200</string>
@@ -540,8 +492,8 @@
       <widget class="QLabel" name="overscan_3">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>5</y>
+         <x>12</x>
+         <y>6</y>
          <width>116</width>
          <height>16</height>
         </rect>
@@ -566,7 +518,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>130</y>
+        <y>250</y>
         <width>246</width>
         <height>56</height>
        </rect>
@@ -614,8 +566,8 @@
       <widget class="QLabel" name="overscan">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>5</y>
+         <x>12</x>
+         <y>6</y>
          <width>51</width>
          <height>16</height>
         </rect>
@@ -632,7 +584,33 @@
         <string>Overscan</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="showFrustum">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>174</x>
+         <y>5</y>
+         <width>71</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Frustum</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
      </widget>
@@ -642,7 +620,7 @@
         <x>0</x>
         <y>10</y>
         <width>246</width>
-        <height>101</height>
+        <height>116</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -660,11 +638,20 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>95</x>
-         <y>70</y>
-         <width>41</width>
+         <x>98</x>
+         <y>60</y>
+         <width>51</width>
          <height>21</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>Display the distance target, you should place it where you want the dolly effect should occur.</string>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(81, 132, 165);</string>
@@ -673,7 +660,7 @@
         <string>Target</string>
        </property>
        <property name="checkable">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="checked">
         <bool>false</bool>
@@ -685,37 +672,12 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLineEdit" name="focalLengthValue">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>41</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(43, 43, 43);</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>false</bool>
-       </property>
-      </widget>
       <widget class="QScrollBar" name="focalLength">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>226</width>
+         <x>12</x>
+         <y>32</y>
+         <width>221</width>
          <height>16</height>
         </rect>
        </property>
@@ -725,14 +687,22 @@
          <height>16</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <weight>50</weight>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>false</kerning>
+        </font>
+       </property>
        <property name="focusPolicy">
         <enum>Qt::WheelFocus</enum>
        </property>
        <property name="minimum">
-        <number>12</number>
+        <number>8</number>
        </property>
        <property name="maximum">
-        <number>200</number>
+        <number>250</number>
        </property>
        <property name="pageStep">
         <number>1</number>
@@ -756,14 +726,15 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>70</y>
+         <x>12</x>
+         <y>60</y>
          <width>91</width>
          <height>20</height>
         </rect>
        </property>
        <property name="font">
         <font>
+         <pointsize>9</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -778,29 +749,67 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="overscan_4">
        <property name="geometry">
         <rect>
-         <x>55</x>
-         <y>11</y>
-         <width>31</width>
+         <x>12</x>
+         <y>6</y>
+         <width>116</width>
          <height>16</height>
         </rect>
        </property>
        <property name="font">
         <font>
+         <pointsize>9</pointsize>
+         <weight>50</weight>
          <italic>true</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
-        <string>(mm)</string>
+        <string>Focal (mm)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
-      <zorder>focalLengthValue</zorder>
+      <widget class="QCheckBox" name="tumbleTool">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>85</y>
+         <width>61</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>The camera will orbit around the vertex/face where you the mouse pointer is.</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Tumble</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
       <zorder>focalLength</zorder>
       <zorder>dollyZoomCheckBox</zorder>
-      <zorder>label</zorder>
       <zorder>showManip</zorder>
+      <zorder>overscan_4</zorder>
+      <zorder>tumbleTool</zorder>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -814,7 +823,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>175</y>
+        <y>170</y>
         <width>246</width>
         <height>136</height>
        </rect>
@@ -834,8 +843,8 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>9</x>
-         <y>77</y>
+         <x>15</x>
+         <y>80</y>
          <width>58</width>
          <height>19</height>
         </rect>
@@ -847,68 +856,13 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="opacity">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>51</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-         <weight>50</weight>
-         <italic>true</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Color</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="fit">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>40</y>
-         <width>101</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>140</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Vertical</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
       <widget class="QCheckBox" name="aspectRatio">
        <property name="enabled">
         <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>9</x>
+         <x>15</x>
          <y>105</y>
          <width>116</width>
          <height>21</height>
@@ -927,46 +881,12 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="gate">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>129</x>
-         <y>40</y>
-         <width>101</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>140</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Film Gate</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QScrollBar" name="colorGain">
+      <widget class="QScrollBar" name="colorOffset">
        <property name="geometry">
         <rect>
          <x>70</x>
          <y>13</y>
-         <width>161</width>
+         <width>131</width>
          <height>16</height>
         </rect>
        </property>
@@ -976,38 +896,222 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>12</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>100</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-      </widget>
-      <widget class="QLineEdit" name="imagePlane">
-       <property name="enabled">
+       <property name="invertedAppearance">
         <bool>false</bool>
        </property>
+      </widget>
+      <widget class="QScrollBar" name="alphaGain">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>140</y>
-         <width>191</width>
-         <height>20</height>
+         <x>70</x>
+         <y>41</y>
+         <width>131</width>
+         <height>16</height>
         </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>12</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedAppearance">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="opacity_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>41</y>
+         <width>51</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <italic>true</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Opacity</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frame_4">
+       <property name="geometry">
+        <rect>
+         <x>165</x>
+         <y>69</y>
+         <width>76</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="gate">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>34</y>
+          <width>66</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>140</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Film Gate</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="fit">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>5</y>
+          <width>66</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>140</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Vertical</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="opacity_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>13</y>
+         <width>51</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <italic>true</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Color</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushColor">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>10</y>
+         <width>26</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>50</weight>
+         <italic>true</italic>
+         <bold>false</bold>
+        </font>
        </property>
        <property name="text">
         <string/>
        </property>
       </widget>
-      <zorder>imagePlane</zorder>
+      <zorder>frame_4</zorder>
       <zorder>rotateButton</zorder>
-      <zorder>opacity</zorder>
-      <zorder>fit</zorder>
       <zorder>aspectRatio</zorder>
-      <zorder>gate</zorder>
-      <zorder>colorGain</zorder>
+      <zorder>colorOffset</zorder>
+      <zorder>alphaGain</zorder>
+      <zorder>opacity_2</zorder>
+      <zorder>opacity_3</zorder>
+      <zorder>pushColor</zorder>
      </widget>
      <widget class="QLabel" name="overscan_2">
       <property name="geometry">
        <rect>
-        <x>135</x>
+        <x>130</x>
         <y>10</y>
         <width>51</width>
         <height>16</height>
@@ -1066,7 +1170,7 @@ color: rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>30</y>
+        <y>35</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -1139,6 +1243,11 @@ color: rgb(255, 255, 255);</string>
        <enum>QListView::ListMode</enum>
       </property>
      </widget>
+     <zorder>overscan_2</zorder>
+     <zorder>pb_create</zorder>
+     <zorder>preview</zorder>
+     <zorder>listPic</zorder>
+     <zorder>imagePlaneFrame</zorder>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -1204,8 +1313,111 @@ color: rgb(255, 255, 255);</string>
        </item>
       </layout>
      </widget>
+     <widget class="QFrame" name="frame_5">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>80</y>
+        <width>246</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(73, 73, 73);</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <zorder>frame_5</zorder>
+     <zorder>formLayoutWidget</zorder>
     </widget>
    </widget>
+   <widget class="QLineEdit" name="focalLengthValue">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>20</y>
+      <width>41</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>218</x>
+      <y>24</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <italic>true</italic>
+     </font>
+    </property>
+    <property name="text">
+     <string>(mm)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="imagePlane">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>270</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <zorder>imagePlane</zorder>
+   <zorder>listCam</zorder>
+   <zorder>tabWidget</zorder>
+   <zorder>focalLengthValue</zorder>
+   <zorder>label</zorder>
   </widget>
  </widget>
  <resources/>
