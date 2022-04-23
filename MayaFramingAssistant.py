@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# mayaFramingHelper.py
+# Maya-Framing-Assistant.py
 # script by CHRISTOPHE MOREAU moreau.vfx@gmail.com
-# 03/2022
+# 04/2022
 
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtUiTools import QUiLoader
@@ -81,7 +81,6 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(parent)
         # using the UIFILEPATH
         UIFILEPATH = str(sys.path[0]) + str(r'/gui/mainWindow.ui')
-        # UIFILEPATH = str(r'Z:/ESMA/04_DEV/PIPELINE/PYTHON/mayaFramingHelper/gui/mainWindow.ui')
         self.UI = QUiLoader().load(UIFILEPATH)
         # Get the window title from the ui file
         self.setWindowTitle('Framing Assistant')
@@ -93,7 +92,6 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
 
         # Path to png picture
         self.pathImage = str(sys.path[0]) + r"/pictures"
-        # self.pathImage = str('Z:/ESMA/04_DEV/PIPELINE/PYTHON/mayaFramingHelper') + r"/pictures"
 
         # Update Camera at launch
         self.activateOptions(2)
@@ -493,7 +491,7 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
             self.UI.colorOffset.setValue(colorOffsetR*100)
 
     def overScanValue(self, value):
-        cmds.setAttr(str(self.currentCameraShape[0]) + '.overscan', float('%.4f' % (value / 100 + 1)))
+        cmds.setAttr(str(self.currentCameraShape[0]) + '.overscan', float('%.4f' % ((value * 0.01) + 1)))
 
     def rotateImagePlane(self, state):
         if state:
