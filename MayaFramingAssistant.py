@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# Maya-Framing-Assistant.py
+# mayaFramingHelper.py
 # script by CHRISTOPHE MOREAU moreau.vfx@gmail.com
-# 04/2022
+# 03/2022
 
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtUiTools import QUiLoader
@@ -16,7 +16,6 @@ import sys
 # listing *.png from picture's folder
 def getListPic():
     pathImage = str(sys.path[0]) + r"/pictures"
-    #pathImage = r"Z:/ESMA/04_DEV/PIPELINE/PYTHON/mayaFramingHelper/pictures"
     lst = listdir(pathImage)
     listPic = []
     for x in lst:
@@ -45,6 +44,14 @@ def viewerToUse():
         curCamera = cmds.modelEditor(viewPort, q=1, av=1, cam=1)
         nomCam = list(curCamera.split('|'))
         camera = nomCam[len(nomCam) - 2]
+
+        # workaround Maya 2022 viewport bug
+        if currentViewPort:
+            pass
+        else:
+            if camera == 'persp':
+                currentViewPort = viewPort
+
         if camera != '':
             if str(cmds.objectType(curCamera)) != "camera":
                 camera = nomCam[len(nomCam) - 1]
@@ -83,12 +90,12 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
         UIFILEPATH = str(sys.path[0]) + str(r'/gui/mainWindow.ui')
         self.UI = QUiLoader().load(UIFILEPATH)
         # Get the window title from the ui file
-        self.setWindowTitle('Framing Assistant')
+        self.setWindowTitle('Framing Helper')
         # Main widget
         self.setCentralWidget(self.UI)
 
         # setting the fixed size of window
-        self.setFixedSize(265, 396)
+        # self.setFixedSize(265, 396)
 
         # Path to png picture
         self.pathImage = str(sys.path[0]) + r"/pictures"
@@ -107,15 +114,14 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
         self.UI.preview.setPixmap(self.pathImage + '//' + self.UI.listPic.item(0).text() + '.png')
         self.UI.colorOffset.valueChanged.connect(self.colorOffsetValue)
         self.UI.alphaGain.valueChanged.connect(self.alphaGainValue)
-        #self.UI.overScan.sliderMoved.connect(self.overScanValue)
         self.UI.overScan.valueChanged.connect(self.overScanValue)
         self.UI.rotateButton.clicked.connect(self.rotateImagePlane)
         self.UI.gate.clicked.connect(self.resolutionGate)
         self.UI.fit.clicked.connect(self.fitSettings)
         self.UI.aspectRatio.clicked.connect(self.aspectRatio)
-        self.UI.hdFormat.stateChanged.connect(self.renderSettings)
-        self.UI.scopeFormat.stateChanged.connect(self.renderSettings)
-        self.UI.flatFormat.stateChanged.connect(self.renderSettings)
+        self.UI.hdFormat.clicked.connect(self.renderSettings)
+        self.UI.scopeFormat.clicked.connect(self.renderSettings)
+        self.UI.flatFormat.clicked.connect(self.renderSettings)
 
         self.UI.pushColor.clicked.connect(self.colorSelector)
         self.UI.tumbleTool.clicked.connect(self.tumbleTool)
@@ -123,6 +129,11 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
         self.UI.focalLength.valueChanged.connect(self.focalLength)
         self.UI.focalLength.sliderPressed.connect(self.initFocusDistance)
         self.UI.focalLengthValue.returnPressed.connect(self.focalLengthSet)
+
+        self.UI.panZoom.clicked.connect(self.panZoom)
+        self.UI.initPushButton.clicked.connect(self.initPushButton)
+
+        self.UI.rollSlider.valueChanged.connect(self.rollTool)
 
         # Focal Length Preset
         self.UI.pushButton12.clicked.connect(self.focalPreset)
@@ -147,6 +158,11 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
         self.mainCameraViewer = ''
         self.viewerToUse = viewerToUse()[0]
         self.cameraToUse = viewerToUse()[1]
+        self.initPanZoomValueX = 0.0
+        self.initPanZoomValueY = 0.0
+        self.currentPanZoomValueX = 0.0
+        self.currentPanZoomValueY = 0.0
+        self.UI.panZoomArea.setEnabled(0)
 
         if self.UI.imagePlane.text():
             self.imagePlaneShape = str(cmds.listRelatives(self.UI.imagePlane.text(), ad=0, s=1)[0])
@@ -167,11 +183,78 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
 
         # Create event when camera comboBox is pressed
         self.UI.listCam.installEventFilter(self)
+        self.UI.panZoomArea.installEventFilter(self)
+        # QtGui.QWindow.close()
+        # Action when user close the toolBox
+        # self.UI.gate.clicked.connect(self.resolutionGate)
 
-    def eventFilter(self, target, event):
-        if target == self.UI.listCam and event.type() == QtCore.QEvent.MouseButtonPress and self.UI.listCam != '':
+    def closeEvent(self, event):
+        self.tumbleTool(0)
+
+    def cursorInWidget(self):
+        cursorPos = QtGui.QCursor.pos()
+        widgetWidth = self.UI.panZoomArea.geometry().width()
+        widgetHeight = self.UI.panZoomArea.geometry().height()
+        widgetPos = self.UI.panZoomArea.mapToGlobal(QtCore.QPoint(0, 0))
+        if cursorPos.x() <= widgetPos.x() or cursorPos.y() <= widgetPos.y() or cursorPos.x() >= (widgetPos.x() + widgetWidth) or cursorPos.y() >= (widgetPos.y() + widgetHeight):
+            return False
+        else:
+            return True
+
+    def eventFilter(self, obj, event):
+
+        if event.type() == event.MouseButtonPress and obj is self.UI.listCam and self.UI.listCam != '':
             self.updateCameraList()
-        return False
+
+        if event.type() == QtCore.QEvent.Wheel and obj is self.UI.panZoomArea:
+            self.panZoomWheel(event.angleDelta().y())
+
+        if event.type() == QtCore.QEvent.MouseButtonPress and obj is self.UI.panZoomArea:
+            self.initPanZoom(event.localPos().x(), event.localPos().y())
+
+        if event.type() == event.MouseMove and obj is self.UI.panZoomArea:
+            if event.buttons() == QtCore.Qt.LeftButton:
+                if self.UI.panZoom.isChecked():
+                    self.panZoomMove(event.localPos().x(), event.localPos().y())
+
+        # if event.type() == QtCore.QEvent.MouseButtonDblClick and obj is self.UI.panZoomArea:
+        #     if self.UI.panZoom.isChecked():
+        #         self.panZoom(0)
+
+        #return super(MainWindow, self).eventFilter(obj, event)
+        return 0
+
+    def initPanZoom(self, valueX, valueY):
+        self.initPanZoomValueX = valueX
+        self.initPanZoomValueY = valueY
+        self.currentPanZoomValueX = cmds.getAttr((str(self.currentCameraShape[0]) + '.horizontalPan'))
+        self.currentPanZoomValueY = cmds.getAttr((str(self.currentCameraShape[0]) + '.verticalPan'))
+
+    def initPushButton(self):
+        cmds.setAttr((str(self.currentCameraShape[0]) + '.horizontalPan'), 0)
+        cmds.setAttr((str(self.currentCameraShape[0]) + '.verticalPan'), 0)
+        cmds.setAttr((str(self.currentCameraShape[0]) + '.zoom'), 1)
+
+    def panZoom(self, state):
+        cmds.setAttr((str(self.currentCameraShape[0]) + '.panZoomEnabled'), state)
+        self.UI.panZoomArea.setEnabled(state)
+
+    def panZoomWheel(self, value):
+        NewValue = -0.05 * (value / 120)
+        getValue = float(cmds.getAttr(str(self.currentCameraShape[0]) + '.zoom'))
+        newValue = round(float(getValue + NewValue), 3)
+        if newValue >= 0.01 and self.UI.panZoom.isChecked():
+            cmds.setAttr((str(self.currentCameraShape[0]) + '.zoom'), newValue)
+
+    def panZoomMove(self, getX, getY):  # Panel size = 150x85px
+        valueX = (((getX - self.initPanZoomValueX)/-150)*(cmds.getAttr(str(self.currentCameraShape[0]) + '.zoom'))*0.2)+self.currentPanZoomValueX
+        valueY = (((getY - self.initPanZoomValueY)/85)*(cmds.getAttr(str(self.currentCameraShape[0]) + '.zoom'))*0.2)+self.currentPanZoomValueY
+        cmds.setAttr((str(self.currentCameraShape[0]) + '.horizontalPan'), clip(valueX, -1.4, 1.4))
+        cmds.setAttr((str(self.currentCameraShape[0]) + '.verticalPan'), clip(valueY, -1, 1))
+
+    def rollTool(self, value):
+        # cmds.roll(self.currentCameraShape, abs=0, rel=1, d=value)
+        cmds.setAttr(str(self.UI.listCam.currentText()) + '.rotateAxisZ', value)
 
     def tumbleTool(self, state):
         if state:
@@ -184,7 +267,7 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
 
     def colorSelector(self):
         getColor = self.UI.pushColor.palette().button().color().getRgb()
-        cmds.colorEditor(rgb=((float(getColor[0])/255), (float(getColor[1])/255), (float(getColor[2])/255)),alpha=False)
+        cmds.colorEditor(rgb=((float(getColor[0]) / 255), (float(getColor[1]) / 255), (float(getColor[2]) / 255)), alpha=False)
         values = None
         if cmds.colorEditor(query=True, result=True):
             values = cmds.colorEditor(query=True, rgb=True, mini=1, rgbValue=True, alpha=False)
@@ -465,7 +548,7 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
         cmds.setAttr(str(self.UI.listCam.currentText()) + '.displayFilmGate', 1)
 
     def colorOffsetValue(self, value):
-        getValue = float(value/100)
+        getValue = float(value / 100)
         cmds.setAttr(str(self.imagePlaneShape) + '.colorGain', getValue, getValue, getValue)
         color = 'background-color:rgb({},{},{})'.format(int(getValue * 255), int(getValue * 255), int(getValue * 255))
         self.UI.pushColor.setStyleSheet(color)
@@ -486,9 +569,8 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
 
         color = 'background-color:rgb({},{},{})'.format(colorOffsetR * 255, colorOffsetG * 255, colorOffsetB * 255)
         self.UI.pushColor.setStyleSheet(color)
-        
         if colorOffsetR == colorOffsetG and colorOffsetG == colorOffsetB:
-            self.UI.colorOffset.setValue(colorOffsetR*100)
+            self.UI.colorOffset.setValue(colorOffsetR * 100)
 
     def overScanValue(self, value):
         cmds.setAttr(str(self.currentCameraShape[0]) + '.overscan', float('%.4f' % ((value * 0.01) + 1)))
@@ -537,21 +619,21 @@ class MainWindow(MayaQWidgetBaseMixin, QtWidgets.QMainWindow):
 
     def renderSettings(self, setFormat):
 
-        if setFormat == 2 and self.UI.hdFormat.isChecked():
+        if setFormat and self.UI.hdFormat.isChecked():
             cmds.setAttr("defaultResolution.height", 1080)
             cmds.setAttr("defaultResolution.width", 1920)
             cmds.setAttr("defaultResolution.deviceAspectRatio", 1.778)
             self.UI.flatFormat.setChecked(False)
             self.UI.scopeFormat.setChecked(False)
 
-        if setFormat == 2 and self.UI.flatFormat.isChecked():
+        if setFormat and self.UI.flatFormat.isChecked():
             cmds.setAttr("defaultResolution.height", 1080)
             cmds.setAttr("defaultResolution.width", 1998)
             cmds.setAttr("defaultResolution.deviceAspectRatio", 1.850)
             self.UI.hdFormat.setChecked(False)
             self.UI.scopeFormat.setChecked(False)
 
-        if setFormat == 2 and self.UI.scopeFormat.isChecked():
+        if setFormat and self.UI.scopeFormat.isChecked():
             cmds.setAttr("defaultResolution.height", 858)
             cmds.setAttr("defaultResolution.width", 2048)
             cmds.setAttr("defaultResolution.deviceAspectRatio", 2.387)
@@ -580,8 +662,8 @@ def main():
             cmds.setAttr("cameraShape1.nearClipPlane", 1)
             cmds.setAttr("cameraShape1.farClipPlane", 20000)
             color = 'background-color:rgb({},{},{})'.format(255, 255, 255)
+            cmds.select(cl=1)
             window.UI.pushColor.setStyleSheet(color)
-
             window.updateCameraList()
 
         else:
